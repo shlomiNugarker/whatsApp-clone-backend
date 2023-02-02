@@ -6,6 +6,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 
 import authRoutes from './api/auth/authRoutes'
+import userRoutes from './api/user/userRoutes'
 
 dotenv.config()
 
@@ -37,6 +38,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(cors(corsOptions))
 
   app.use('/api/auth', authRoutes)
+  app.use('/api/user', userRoutes)
 }
 
 app.get('/**', (req, res) => {
