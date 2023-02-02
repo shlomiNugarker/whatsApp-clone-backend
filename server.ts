@@ -5,6 +5,8 @@ import path from 'path'
 import cors from 'cors'
 import dotenv from 'dotenv'
 
+import authRoutes from './api/auth/authRoutes'
+
 dotenv.config()
 
 const app: Express = express()
@@ -33,6 +35,8 @@ if (process.env.NODE_ENV === 'production') {
     credentials: true,
   }
   app.use(cors(corsOptions))
+
+  app.use('/api/auth', authRoutes)
 }
 
 app.get('/**', (req, res) => {
