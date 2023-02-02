@@ -1,5 +1,5 @@
 import authService from './authService'
-import { Request, RequestHandler, Response } from 'express'
+import { Request, Response } from 'express'
 import * as jwt from 'jsonwebtoken'
 
 export default { login, signup, logout }
