@@ -9,7 +9,7 @@ const connection = mysql.createConnection({
   port: 3306,
   user: 'root',
   password: '',
-  database: 'heroes_db',
+  database: 'whatsapp_db',
   insecureAuth: true,
 })
 
