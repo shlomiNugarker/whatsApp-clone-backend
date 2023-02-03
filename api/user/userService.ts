@@ -4,6 +4,7 @@ import DBService from '../../services/dbService'
 export default {
   add,
   getByEmail,
+  getByUserId,
 }
 
 async function add({ email, password, fullname }: any) {
@@ -26,6 +27,16 @@ async function add({ email, password, fullname }: any) {
 async function getByEmail(email: string) {
   try {
     const sqlCmd = `SELECT * FROM user WHERE email = '${email}'`
+    const users: IUser[] = await DBService.runSQL(sqlCmd)
+
+    if (users.length === 1) return users[0]
+  } catch (err: any) {
+    throw new Error(err.message)
+  }
+}
+async function getByUserId(userId: string) {
+  try {
+    const sqlCmd = `SELECT * FROM user WHERE id = '${userId}'`
     const users: IUser[] = await DBService.runSQL(sqlCmd)
 
     if (users.length === 1) return users[0]
