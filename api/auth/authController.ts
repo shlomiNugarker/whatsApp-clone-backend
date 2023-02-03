@@ -32,6 +32,19 @@ async function login(req: Request, res: Response) {
   }
 }
 
-async function signup(req: Request, res: Response) {}
+async function signup(req: Request, res: Response) {
+  try {
+    const { email, password, fullname } = req.body
+    const account = await authService.signup(email, password, fullname)
+
+    const user = await authService.login(email, password)
+
+    req.session.user = user
+    res.json(user)
+  } catch (err) {
+    console.log('Failed to signup ' + err)
+    res.status(500).send({ err: 'Failed to signup' })
+  }
+}
 
 async function logout(req: Request, res: Response) {}

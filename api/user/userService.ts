@@ -11,8 +11,6 @@ async function add({ email, password, fullname }: any) {
     const sqlCmd = `INSERT INTO user (email,password,fullName) 
     VALUES ("${email}","${password}","${fullname}")`
 
-    await DBService.runSQL(sqlCmd)
-
     const okPacket = await DBService.runSQL(sqlCmd)
     const lastInserted = await DBService.runSQL(
       `SELECT * from user where user.id = ${okPacket.insertId}`
@@ -27,8 +25,9 @@ async function add({ email, password, fullname }: any) {
 
 async function getByEmail(email: string) {
   try {
-    const sqlCmd = `SELECT * FROM user WHERE user.email = ${email}`
+    const sqlCmd = `SELECT * FROM user WHERE email = '${email}'`
     const users: IUser[] = await DBService.runSQL(sqlCmd)
+
     if (users.length === 1) return users[0]
   } catch (err: any) {
     throw new Error(err.message)

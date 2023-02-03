@@ -3,7 +3,6 @@ import { Request, Response } from 'express'
 
 export default {
   getUserByEmail,
-  updateUser,
   addUser,
 }
 
@@ -16,8 +15,6 @@ async function getUserByEmail(req: Request, res: Response) {
     res.status(500).send({ err: 'Failed to get user' })
   }
 }
-
-async function updateUser(req: Request, res: Response) {}
 
 async function addUser(req: Request, res: Response) {
   try {
