@@ -8,7 +8,6 @@ export default { getChats, getChatById, addChat, updateChat }
 async function getChats(req: Request, res: Response) {
   try {
     const { userId } = req.params
-    console.log({ userId })
 
     const chats = await chatService.query()
     res.json(chats)

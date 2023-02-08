@@ -8,7 +8,6 @@ export default { getMessages, addMessage }
 async function getMessages(req: Request, res: Response) {
   try {
     const { chatId } = req.params
-    console.log({ chatId })
 
     const messages = await messageService.query(chatId)
     res.json(messages)

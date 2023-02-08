@@ -44,7 +44,17 @@ const chatsDB = [
     createdAt: 455445454,
   },
   {
-    id: '1dfhxfh',
+    id: '1dfhsgxfh',
+    userId: ['1r', '2h'],
+    createdAt: 455445454,
+  },
+  {
+    id: '1dffhhxfh',
+    userId: ['1g', '2d'],
+    createdAt: 455445454,
+  },
+  {
+    id: '1dfhrjxfh',
     userId: ['1', '2'],
     createdAt: 455445454,
   },
