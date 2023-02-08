@@ -6,6 +6,7 @@ export default {
   getByEmail,
   getByUserId,
   getUsers,
+  update,
 }
 
 async function add({ email, password, fullname }: any) {
@@ -54,5 +55,30 @@ async function getByUserId(userId: string) {
     if (users.length === 1) return users[0]
   } catch (err: any) {
     throw new Error(err.message)
+  }
+}
+
+async function update(user: any) {
+  try {
+    const query = `UPDATE user SET
+                          fullname = '${user.fullname}',
+                          imgUrl = '${user.imgUrl}',
+                          email = '${user.email}',
+                          contacts = '${user.contacts}',
+                          about = "${user.about}"
+                  WHERE user.id = '${user.id}'`
+
+    const okPacket = await DBService.runSQL(query)
+
+    if (okPacket.affectedRows !== 0) {
+      const lastInserted = await DBService.runSQL(
+        `SELECT * from user where user.id = ${user.id}`
+      )
+      delete lastInserted[0].password
+      return lastInserted[0]
+    }
+  } catch (err) {
+    console.log(`cannot update user ${user._id}`, err)
+    throw err
   }
 }

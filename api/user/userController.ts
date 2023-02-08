@@ -6,6 +6,7 @@ export default {
   addUser,
   getUserByUserId,
   query,
+  updateUser,
 }
 
 async function query(req: Request, res: Response) {
@@ -41,6 +42,18 @@ async function addUser(req: Request, res: Response) {
   try {
     const user = req.body
     const savedUser = await userService.add(user)
+    res.send(savedUser)
+  } catch (err) {
+    console.log('Failed to update user', err)
+    res.status(500).send({ err: 'Failed to update user' })
+  }
+}
+
+async function updateUser(req: Request, res: Response) {
+  try {
+    const user = req.body
+
+    const savedUser = await userService.update(user)
     res.send(savedUser)
   } catch (err) {
     console.log('Failed to update user', err)
