@@ -23,12 +23,12 @@ async function login(req: Request, res: Response) {
       { expiresIn: '24h' }
     )
 
-    res.cookie('access-token', accessToken, {
+    res.cookie('accessToken', accessToken, {
       maxAge: 60 * 1000 * 60 * 24, // 24H  //mil
       httpOnly: true,
     })
 
-    res.json({ ...user, accessToken })
+    res.json({ user, accessToken })
   } catch (err) {
     console.log('Failed to Login ' + err)
     res.status(401).send({ err: 'Failed to Login' })
@@ -55,8 +55,9 @@ async function signup(req: Request, res: Response) {
 
 async function logout(req: Request, res: Response) {
   try {
-    res.clearCookie('access-token')
+    res.clearCookie('accessToken')
     res.send({ msg: 'Logged out successfully' })
+    res.end()
   } catch (err) {
     res.status(500).send({ err: 'Failed to logout' })
   }
