@@ -10,7 +10,6 @@ import cookieParser from 'cookie-parser'
 import authRoutes from './api/auth/authRoutes'
 import userRoutes from './api/user/userRoutes'
 import chatRoutes from './api/chat/chatRoutes'
-import messageRoutes from './api/message/messageRoutes'
 
 dotenv.config()
 
@@ -45,7 +44,6 @@ if (process.env.NODE_ENV === 'production') {
   app.use('/api/auth', authRoutes)
   app.use('/api/user', userRoutes)
   app.use('/api/chat', chatRoutes)
-  app.use('/api/message', messageRoutes)
 }
 
 app.get('/**', (req, res) => {
