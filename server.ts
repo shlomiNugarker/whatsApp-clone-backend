@@ -5,6 +5,8 @@ import path from 'path'
 import cors from 'cors'
 import dotenv from 'dotenv'
 
+import cookieParser from 'cookie-parser'
+
 import authRoutes from './api/auth/authRoutes'
 import userRoutes from './api/user/userRoutes'
 import chatRoutes from './api/chat/chatRoutes'
@@ -24,6 +26,7 @@ const session = expressSession({
 
 app.use(session)
 app.use(json())
+app.use(cookieParser())
 app.use(express.static('public'))
 
 if (process.env.NODE_ENV === 'production') {
