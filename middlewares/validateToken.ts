@@ -19,20 +19,17 @@ const createTokens = (user: any) => {
 }
 
 const validateToken = (req: Request, res: Response, next: NextFunction) => {
-  const {
-    headers: { cookie },
-  } = req
-
   let cookies: { [key: string]: string } = {}
 
   const cookiesArray = req.headers.cookie?.split(';')
+
   cookiesArray?.forEach((cookie) => {
     const [key, value] = cookie.trim().split('=')
     cookies[key] = value
   })
 
-  // get The "access-token" value:
-  const accessToken = cookies['access-token']
+  // get The "accessToken" value:
+  const accessToken = cookies['accessToken']
 
   if (!accessToken)
     return res.status(400).json({ error: 'User not Authenticated!' })
