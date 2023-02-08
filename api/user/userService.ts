@@ -5,6 +5,7 @@ export default {
   add,
   getByEmail,
   getByUserId,
+  getUsers,
 }
 
 async function add({ email, password, fullname }: any) {
@@ -20,6 +21,17 @@ async function add({ email, password, fullname }: any) {
     return lastInserted[0]
   } catch (err: any) {
     console.log('cannot insert user', err)
+    throw new Error(err.message)
+  }
+}
+
+async function getUsers() {
+  try {
+    const sqlCmd = `SELECT * FROM user`
+    const users: IUser[] = await DBService.runSQL(sqlCmd)
+
+    return users
+  } catch (err: any) {
     throw new Error(err.message)
   }
 }

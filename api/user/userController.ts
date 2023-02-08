@@ -5,8 +5,19 @@ export default {
   getUserByEmail,
   addUser,
   getUserByUserId,
+  query,
 }
 
+async function query(req: Request, res: Response) {
+  try {
+    const users = await userService.getUsers()
+
+    res.send(users)
+  } catch (err) {
+    console.log('Failed to get users', err)
+    res.status(500).send({ err: 'Failed to get users' })
+  }
+}
 async function getUserByEmail(req: Request, res: Response) {
   try {
     const user = await userService.getByEmail(req.params.email)
