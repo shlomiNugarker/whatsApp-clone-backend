@@ -1,4 +1,3 @@
-import { IUser } from '../../models/IUser'
 import DBService from '../../services/dbService'
 
 export default {
@@ -29,7 +28,7 @@ async function add({ email, password, fullname }: any) {
 async function getUsers() {
   try {
     const sqlCmd = `SELECT * FROM user`
-    const users: IUser[] = await DBService.runSQL(sqlCmd)
+    const users: any = await DBService.runSQL(sqlCmd)
 
     return users
   } catch (err: any) {
@@ -40,7 +39,7 @@ async function getUsers() {
 async function getByEmail(email: string) {
   try {
     const sqlCmd = `SELECT * FROM user WHERE email = '${email}'`
-    const users: IUser[] = await DBService.runSQL(sqlCmd)
+    const users: any = await DBService.runSQL(sqlCmd)
 
     if (users.length === 1) return users[0]
   } catch (err: any) {
@@ -50,7 +49,7 @@ async function getByEmail(email: string) {
 async function getByUserId(userId: string) {
   try {
     const sqlCmd = `SELECT * FROM user WHERE id = '${userId}'`
-    const users: IUser[] = await DBService.runSQL(sqlCmd)
+    const users: any = await DBService.runSQL(sqlCmd)
 
     if (users.length === 1) return users[0]
   } catch (err: any) {
@@ -61,12 +60,12 @@ async function getByUserId(userId: string) {
 async function update(user: any) {
   try {
     const query = `UPDATE user SET
-                          fullname = '${user.fullname}',
-                          imgUrl = '${user.imgUrl}',
-                          email = '${user.email}',
-                          contacts = '${user.contacts}',
+                          fullname = "${user.fullname}",
+                          imgUrl = "${user.imgUrl}",
+                          email = "${user.email}",
+                          contacts = "${user.contacts}",
                           about = "${user.about}"
-                  WHERE user.id = '${user.id}'`
+                  WHERE user.id = "${user.id}"`
 
     const okPacket = await DBService.runSQL(query)
 

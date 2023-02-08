@@ -22,6 +22,7 @@ async function query(req: Request, res: Response) {
 async function getUserByEmail(req: Request, res: Response) {
   try {
     const user = await userService.getByEmail(req.params.email)
+    delete user?.password
     res.send(user)
   } catch (err) {
     console.log('Failed to get user', err)
@@ -31,6 +32,7 @@ async function getUserByEmail(req: Request, res: Response) {
 async function getUserByUserId(req: Request, res: Response) {
   try {
     const user = await userService.getByUserId(req.params.userId)
+    delete user?.password
     res.send(user)
   } catch (err) {
     console.log('Failed to get user', err)

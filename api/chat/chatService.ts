@@ -7,9 +7,11 @@ export default {
   update,
 }
 
-async function query() {
+async function query(userId: string) {
   try {
-    return chatsDB
+    const query = `SELECT * FROM chat WHERE chat.userId = ${userId} OR chat.userId2 = ${userId}`
+    const chats = DBService.runSQL(query)
+    return chats
   } catch (err: any) {
     throw new Error(err.message)
   }
@@ -23,7 +25,8 @@ async function getById(chatId: string) {
 }
 
 async function add(chat: any) {
-  const { userId, userId2, messages, createdAt, users } = chat
+  const { userId, userId2, messages, createdAt } = chat
+
   try {
   } catch (err: any) {
     throw new Error(err.message)
@@ -32,30 +35,15 @@ async function add(chat: any) {
 
 async function update(chat: any) {
   try {
+    const query = `UPDATE chat set 
+                          userId = ${chat.userId},
+                          userId2 = ${chat.userId2},
+                          createdAt = ${chat.createdAt},
+                          messages = "${chat.messages}",
+                   WHERE chat.id = ${chat.id}`
+
+    const chats = DBService.runSQL(query)
   } catch (err: any) {
     throw new Error(err.message)
   }
 }
-
-const chatsDB = [
-  {
-    id: '1dfgfsg',
-    userId: ['1', '2'],
-    createdAt: 455445454,
-  },
-  {
-    id: '1dfhsgxfh',
-    userId: ['1r', '2h'],
-    createdAt: 455445454,
-  },
-  {
-    id: '1dffhhxfh',
-    userId: ['1g', '2d'],
-    createdAt: 455445454,
-  },
-  {
-    id: '1dfhrjxfh',
-    userId: ['1', '2'],
-    createdAt: 455445454,
-  },
-]
