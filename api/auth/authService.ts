@@ -1,6 +1,5 @@
 import bcrypt from 'bcrypt'
 import userService from '../user/userService'
-import { IUser } from '../../models/IUser'
 
 export default {
   login,

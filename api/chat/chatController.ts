@@ -10,7 +10,6 @@ async function getChats(req: Request, res: Response) {
     const { userId } = req.params
 
     const chats = await chatService.query(userId)
-    console.log(chats)
 
     res.json(chats)
   } catch (err) {
@@ -41,6 +40,7 @@ async function addChat(req: Request, res: Response) {
 async function updateChat(req: Request, res: Response) {
   try {
     const chat = req.body
+
     const updatedChat = await chatService.update(chat)
     res.json(updatedChat)
   } catch (err) {

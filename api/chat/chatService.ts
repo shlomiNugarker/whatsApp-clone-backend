@@ -39,10 +39,12 @@ async function update(chat: any) {
                           userId = ${chat.userId},
                           userId2 = ${chat.userId2},
                           createdAt = ${chat.createdAt},
-                          messages = "${chat.messages}",
+                          messages = '${chat.messages}'
                    WHERE chat.id = ${chat.id}`
 
-    const chats = DBService.runSQL(query)
+    const savedChat = await DBService.runSQL(query)
+
+    return savedChat
   } catch (err: any) {
     throw new Error(err.message)
   }
