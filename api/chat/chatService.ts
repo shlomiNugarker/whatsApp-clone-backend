@@ -25,9 +25,20 @@ async function getById(chatId: string) {
 }
 
 async function add(chat: any) {
-  const { userId, userId2, messages, createdAt } = chat
-
   try {
+    const sqlCmd = `INSERT INTO chat (userId, userId2, messages, reactions,createdAt) 
+  VALUES (${chat.userId},
+          ${chat.userId2},
+          '${chat.messages}',
+          '${chat.reactions}',
+          ${chat.createdAt})`
+
+    const okPacket = await DBService.runSQL(sqlCmd)
+    const lastInserted = await DBService.runSQL(
+      `SELECT * from chat where chat.id = ${okPacket.insertId}`
+    )
+
+    return lastInserted[0]
   } catch (err: any) {
     throw new Error(err.message)
   }
