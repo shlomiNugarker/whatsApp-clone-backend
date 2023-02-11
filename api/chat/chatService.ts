@@ -40,6 +40,7 @@ async function add(chat: any) {
 
     return lastInserted[0]
   } catch (err: any) {
+    console.log(err)
     throw new Error(err.message)
   }
 }

@@ -51,9 +51,11 @@ function add(chat) {
           ${chat.createdAt})`;
             const okPacket = yield dbService_1.default.runSQL(sqlCmd);
             const lastInserted = yield dbService_1.default.runSQL(`SELECT * from chat where chat.id = ${okPacket.insertId}`);
+            console.log({ okPacket, lastInserted });
             return lastInserted[0];
         }
         catch (err) {
+            console.log(err);
             throw new Error(err.message);
         }
     });
