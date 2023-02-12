@@ -15,8 +15,7 @@ export default {
 
 let connection: mysql.Connection
 
-function handleDisconnect() {
-  // setTimeout(() => {
+setTimeout(() => {
   connection = mysql.createConnection({
     host: process.env.HOST_DB,
     port: 3306,
@@ -30,17 +29,7 @@ function handleDisconnect() {
     if (err) throw new Error('mySql failed connection')
     console.log('connected to SQL server')
   })
-  // })
-
-  connection.on('error', function (err) {
-    console.log('db error ', err)
-    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-      handleDisconnect()
-    } else {
-      throw err
-    }
-  })
-}
+})
 
 function runSQL(sqlCommand: any): Promise<any> {
   return new Promise((resolve, reject) => {
@@ -53,5 +42,3 @@ function runSQL(sqlCommand: any): Promise<any> {
     )
   })
 }
-
-handleDisconnect()
