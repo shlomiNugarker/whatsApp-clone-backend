@@ -11,6 +11,8 @@ import authRoutes from './api/auth/authRoutes'
 import userRoutes from './api/user/userRoutes'
 import chatRoutes from './api/chat/chatRoutes'
 
+const MemoryStore = require('memorystore')(expressSession)
+
 dotenv.config()
 
 const app: Express = express()
@@ -19,8 +21,18 @@ const http = require('http').createServer(app)
 const session = expressSession({
   secret: 'secret session',
   resave: false,
-  saveUninitialized: true,
-  cookie: { secure: false },
+  saveUninitialized: false, // don't create session until something stored
+  cookie: { secure: true },
+  store: new MemoryStore({
+    checkPeriod: 86400000, // prune expired entries every 24h
+  }),
+})
+
+app.use(function (req, res, next) {
+  if (!req.session) {
+    return next(new Error('No session')) //handle error
+  }
+  next() //otherwise continue
 })
 
 app.use(session)
