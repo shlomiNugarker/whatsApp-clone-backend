@@ -15,25 +15,31 @@ exports.default = {
 //   database: 'whatsapp_db',
 //   insecureAuth: true,
 // })
-let connection;
-setTimeout(() => {
-    connection = mysql_1.default.createConnection({
-        host: process.env.HOST_DB,
-        port: 3306,
-        user: process.env.USER_DB,
-        password: process.env.PASSWORD_DB,
-        database: process.env.DATABASE_DB,
-        insecureAuth: true,
+let pool;
+function handleDisconnect() {
+    setTimeout(() => {
+        pool = mysql_1.default.createPool({
+            host: process.env.HOST_DB,
+            port: 3306,
+            user: process.env.USER_DB,
+            password: process.env.PASSWORD_DB,
+            database: process.env.DATABASE_DB,
+            insecureAuth: true,
+        });
+        pool.on('connection', function (connection) {
+            console.log('DB Connection established');
+            connection.on('error', function (err) {
+                console.error(new Date(), 'MySQL error', err.code);
+            });
+            connection.on('close', function (err) {
+                console.error(new Date(), 'MySQL close', err);
+            });
+        });
     });
-    connection.connect((err) => {
-        if (err)
-            throw new Error('mySql failed connection');
-        console.log('connected to SQL server');
-    });
-});
+}
 function runSQL(sqlCommand) {
     return new Promise((resolve, reject) => {
-        connection.query(sqlCommand, function (error, results, fields) {
+        pool.query(sqlCommand, function (error, results, fields) {
             if (error)
                 reject(error);
             else
@@ -41,3 +47,4 @@ function runSQL(sqlCommand) {
         });
     });
 }
+handleDisconnect();

@@ -39,10 +39,10 @@ else {
         credentials: true,
     };
     app.use((0, cors_1.default)(corsOptions));
-    app.use('/api/auth', authRoutes_1.default);
-    app.use('/api/user', userRoutes_1.default);
-    app.use('/api/chat', chatRoutes_1.default);
 }
+app.use('/api/auth', authRoutes_1.default);
+app.use('/api/user', userRoutes_1.default);
+app.use('/api/chat', chatRoutes_1.default);
 app.get('/**', (req, res) => {
     res.sendFile(path_1.default.join(__dirname, 'public', 'index.html'));
 });
