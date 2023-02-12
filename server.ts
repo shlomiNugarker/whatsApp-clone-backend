@@ -28,12 +28,12 @@ const session = expressSession({
   }),
 })
 
-app.use(function (req, res, next) {
-  if (!req.session) {
-    return next(new Error('No session')) //handle error
-  }
-  next() //otherwise continue
-})
+// app.use(function (req, res, next) {
+//   if (!req.session) {
+//     return next(new Error('No session')) //handle error
+//   }
+//   next() //otherwise continue
+// })
 
 app.use(session)
 app.use(json())
