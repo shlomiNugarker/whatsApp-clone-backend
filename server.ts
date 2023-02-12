@@ -40,11 +40,10 @@ if (process.env.NODE_ENV === 'production') {
     credentials: true,
   }
   app.use(cors(corsOptions))
-
-  app.use('/api/auth', authRoutes)
-  app.use('/api/user', userRoutes)
-  app.use('/api/chat', chatRoutes)
 }
+app.use('/api/auth', authRoutes)
+app.use('/api/user', userRoutes)
+app.use('/api/chat', chatRoutes)
 
 app.get('/**', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'))
