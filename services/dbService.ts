@@ -1,4 +1,4 @@
-import mysql from 'mysql'
+import mysql, { Connection, MysqlError } from 'mysql'
 
 export default {
   runSQL,
@@ -13,11 +13,11 @@ export default {
 //   insecureAuth: true,
 // })
 
-let connection: mysql.Connection
+let pool: mysql.Pool
 
 function handleDisconnect() {
   setTimeout(() => {
-    connection = mysql.createConnection({
+    pool = mysql.createPool({
       host: process.env.HOST_DB,
       port: 3306,
       user: process.env.USER_DB,
@@ -26,26 +26,37 @@ function handleDisconnect() {
       insecureAuth: true,
     })
 
-    connection.connect((err: unknown) => {
-      if (err) throw new Error('mySql failed connection')
-      console.log('connected to SQL server')
+    pool.on('connection', function (connection: Connection) {
+      console.log('DB Connection established')
+
+      connection.on('error', function (err: MysqlError) {
+        console.error(new Date(), 'MySQL error', err.code)
+      })
+      connection.on('close', function (err: MysqlError) {
+        console.error(new Date(), 'MySQL close', err)
+      })
     })
 
-    connection.on('error', function (err) {
-      console.log('db error', err)
-      if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-        // Connection to the MySQL server is usually
-        setTimeout(handleDisconnect, 2000) // lost due to either server restart, or a
-      } else {
-        // connnection idle timeout (the wait_timeout
-        throw err // server variable configures this)
-      }
-    })
+    // connection.connect((err: unknown) => {
+    //   if (err) throw new Error('mySql failed connection')
+    //   console.log('connected to SQL server')
+    // })
+
+    // connection.on('error', function (err) {
+    //   console.log('db error', err)
+    //   if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+    //     // Connection to the MySQL server is usually
+    //     setTimeout(handleDisconnect, 2000) // lost due to either server restart, or a
+    //   } else {
+    //     // connnection idle timeout (the wait_timeout
+    //     throw err // server variable configures this)
+    //   }
+    // })
   })
 }
 function runSQL(sqlCommand: any): Promise<any> {
   return new Promise((resolve, reject) => {
-    connection.query(
+    pool.query(
       sqlCommand,
       function (error: unknown, results: any, fields: any) {
         if (error) reject(error)
