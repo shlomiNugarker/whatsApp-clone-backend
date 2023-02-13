@@ -8,7 +8,7 @@ const createTokens = (user) => {
 };
 const validateToken = (req, res, next) => {
     var _a;
-    return next();
+    // return next()
     let cookies = {};
     const cookiesArray = (_a = req.headers.cookie) === null || _a === void 0 ? void 0 : _a.split(';');
     cookiesArray === null || cookiesArray === void 0 ? void 0 : cookiesArray.forEach((cookie) => {

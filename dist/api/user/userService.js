@@ -23,8 +23,9 @@ exports.default = {
 function add({ email, password, fullname }) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const sqlCmd = `INSERT INTO user (email,password,fullName) 
-    VALUES ("${email}","${password}","${fullname}")`;
+            const imageUrl = 'https://res.cloudinary.com/duajg3ah1/image/upload/v1676292870/duuy2qp8erroxfexacz8.jpg';
+            const sqlCmd = `INSERT INTO user (email,password,fullName,imgUrl) 
+    VALUES ("${email}","${password}","${fullname}","${imageUrl}")`;
             const okPacket = yield dbService_1.default.runSQL(sqlCmd);
             const lastInserted = yield dbService_1.default.runSQL(`SELECT * from user where user.id = ${okPacket.insertId}`);
             return lastInserted[0];

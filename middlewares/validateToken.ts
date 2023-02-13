@@ -19,7 +19,7 @@ const createTokens = (user: any) => {
 }
 
 const validateToken = (req: Request, res: Response, next: NextFunction) => {
-  return next()
+  // return next()
   let cookies: { [key: string]: string } = {}
 
   const cookiesArray = req.headers.cookie?.split(';')

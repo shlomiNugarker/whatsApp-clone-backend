@@ -10,8 +10,11 @@ export default {
 
 async function add({ email, password, fullname }: any) {
   try {
-    const sqlCmd = `INSERT INTO user (email,password,fullName) 
-    VALUES ("${email}","${password}","${fullname}")`
+    const imageUrl =
+      'https://res.cloudinary.com/duajg3ah1/image/upload/v1676292870/duuy2qp8erroxfexacz8.jpg'
+
+    const sqlCmd = `INSERT INTO user (email,password,fullName,imgUrl) 
+    VALUES ("${email}","${password}","${fullname}","${imageUrl}")`
 
     const okPacket = await DBService.runSQL(sqlCmd)
     const lastInserted = await DBService.runSQL(
