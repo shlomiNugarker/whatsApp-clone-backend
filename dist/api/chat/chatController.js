@@ -58,6 +58,7 @@ function updateChat(req, res) {
             res.json(updatedChat);
         }
         catch (err) {
+            console.log(err);
             res.status(500).send({ err: 'Failed to update chat' });
         }
     });

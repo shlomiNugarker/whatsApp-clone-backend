@@ -23,7 +23,8 @@ function query(userId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const query = `SELECT * FROM chat WHERE chat.userId = ${userId} OR chat.userId2 = ${userId}`;
-            const chats = dbService_1.default.runSQL(query);
+            const chats = yield dbService_1.default.runSQL(query);
+            console.log({ chats });
             return chats;
         }
         catch (err) {
@@ -72,6 +73,7 @@ function update(chat) {
             return savedChat;
         }
         catch (err) {
+            console.log(err);
             throw new Error(err.message);
         }
     });

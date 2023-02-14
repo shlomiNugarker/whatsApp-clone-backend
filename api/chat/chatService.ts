@@ -10,7 +10,10 @@ export default {
 async function query(userId: string) {
   try {
     const query = `SELECT * FROM chat WHERE chat.userId = ${userId} OR chat.userId2 = ${userId}`
-    const chats = DBService.runSQL(query)
+    const chats = await DBService.runSQL(query)
+
+    console.log({ chats })
+
     return chats
   } catch (err: any) {
     throw new Error(err.message)
@@ -58,6 +61,7 @@ async function update(chat: any) {
 
     return savedChat
   } catch (err: any) {
+    console.log(err)
     throw new Error(err.message)
   }
 }
