@@ -10,6 +10,7 @@ import cookieParser from 'cookie-parser'
 import authRoutes from './api/auth/authRoutes'
 import userRoutes from './api/user/userRoutes'
 import chatRoutes from './api/chat/chatRoutes'
+import socketService from './services/socketService'
 
 dotenv.config()
 
@@ -45,6 +46,8 @@ if (process.env.NODE_ENV === 'production') {
 app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/chat', chatRoutes)
+
+socketService.connectSockets(http, session)
 
 app.get('/**', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'))

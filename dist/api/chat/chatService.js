@@ -24,7 +24,6 @@ function query(userId) {
         try {
             const query = `SELECT * FROM chat WHERE chat.userId = ${userId} OR chat.userId2 = ${userId}`;
             const chats = yield dbService_1.default.runSQL(query);
-            console.log({ chats });
             return chats;
         }
         catch (err) {
@@ -52,6 +51,7 @@ function add(chat) {
           ${chat.createdAt})`;
             const okPacket = yield dbService_1.default.runSQL(sqlCmd);
             const lastInserted = yield dbService_1.default.runSQL(`SELECT * from chat where chat.id = ${okPacket.insertId}`);
+            console.log(lastInserted);
             return lastInserted[0];
         }
         catch (err) {
@@ -69,8 +69,10 @@ function update(chat) {
                           createdAt = ${chat.createdAt},
                           messages = '${chat.messages}'
                    WHERE chat.id = ${chat.id}`;
-            const savedChat = yield dbService_1.default.runSQL(query);
-            return savedChat;
+            const okPacket = yield dbService_1.default.runSQL(query);
+            const lastInserted = yield dbService_1.default.runSQL(`SELECT * from chat where chat.id = ${chat.id}`);
+            console.log(lastInserted);
+            return lastInserted[0];
         }
         catch (err) {
             console.log(err);

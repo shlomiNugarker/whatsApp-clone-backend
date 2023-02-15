@@ -12,8 +12,6 @@ async function query(userId: string) {
     const query = `SELECT * FROM chat WHERE chat.userId = ${userId} OR chat.userId2 = ${userId}`
     const chats = await DBService.runSQL(query)
 
-    console.log({ chats })
-
     return chats
   } catch (err: any) {
     throw new Error(err.message)
@@ -41,6 +39,8 @@ async function add(chat: any) {
       `SELECT * from chat where chat.id = ${okPacket.insertId}`
     )
 
+    console.log(lastInserted)
+
     return lastInserted[0]
   } catch (err: any) {
     console.log(err)
@@ -57,9 +57,15 @@ async function update(chat: any) {
                           messages = '${chat.messages}'
                    WHERE chat.id = ${chat.id}`
 
-    const savedChat = await DBService.runSQL(query)
+    const okPacket = await DBService.runSQL(query)
 
-    return savedChat
+    const lastInserted = await DBService.runSQL(
+      `SELECT * from chat where chat.id = ${chat.id}`
+    )
+
+    console.log(lastInserted)
+
+    return lastInserted[0]
   } catch (err: any) {
     console.log(err)
     throw new Error(err.message)
