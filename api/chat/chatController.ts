@@ -1,7 +1,5 @@
 import chatService from './chatService'
 import { Request, Response } from 'express'
-import * as jwt from 'jsonwebtoken'
-import userService from '../user/userService'
 
 export default { getChats, getChatById, addChat, updateChat }
 

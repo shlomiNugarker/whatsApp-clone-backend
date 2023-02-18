@@ -63,8 +63,6 @@ async function update(chat: any) {
       `SELECT * from chat where chat.id = ${chat.id}`
     )
 
-    console.log(lastInserted)
-
     return lastInserted[0]
   } catch (err: any) {
     console.log(err)

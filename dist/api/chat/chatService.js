@@ -71,7 +71,6 @@ function update(chat) {
                    WHERE chat.id = ${chat.id}`;
             const okPacket = yield dbService_1.default.runSQL(query);
             const lastInserted = yield dbService_1.default.runSQL(`SELECT * from chat where chat.id = ${chat.id}`);
-            console.log(lastInserted);
             return lastInserted[0];
         }
         catch (err) {
